@@ -12,9 +12,7 @@ import (
 	"github.com/micro/micro/v3/service/store"
 )
 
-// New creates a chat for a group of users. The RPC is idempotent so if it's called multiple times
-// for the same users, the same response will be returned. It's good practice to design APIs as
-// idempotent since this enables safe retries.
+// New 创建一个支持幂等操作的chat对象
 func (c *Chat) New(ctx context.Context, req *pb.NewRequest, rsp *pb.NewResponse) error {
 	// in a real world application we would authorize the request to ensure the authenticated user
 	// is part of the chat they're attempting to create. We could do this by getting the user id from

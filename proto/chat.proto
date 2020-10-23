@@ -34,14 +34,16 @@ message RemoveResponse {
 
 message RemoveRequest {
   string chat_id = 1;
-  bool  is_destroy =2; //是否强制销毁聊天
+  bool  is_destoryed =2; //是否强制销毁聊天
 }
 
-// HistoryRequest contains the id of the chat we want the history for. This RPC will return all 
-// historical messages, however in a real life application we'd introduce some form of pagination
-// here, only loading the older messages when required.
+// HistoryRequest 可能很多，支持按时间段查询或者，按数量查询，两种方式
 message HistoryRequest {
   string chat_id = 1;
+  int64  from_timestamp =2;
+  int64  to_timestamp =3;
+  int32  recent_count =4;
+  bool  by_time =5;
 }
 
 // HistoryResponse contains the historical messages in a chat
@@ -53,7 +55,7 @@ message HistoryResponse {
 message SendRequest {
   // a client side id, should be validated by the server to make the request retry safe
   string client_id = 1;
-  // id of the chat the message is being sent to / from
+  //chat ID id of the chat that the message is being sent to / from
   string chat_id = 2;
   // id of the user who sent the message
   string user_id = 3;
@@ -61,6 +63,8 @@ message SendRequest {
   string subject = 4;
   // text of the message
   string text = 5;
+  // sent_at timestamp of this message
+  int64 sent_at =6;
 }
 
 // SendResponse is a blank message returned when a message is successfully created

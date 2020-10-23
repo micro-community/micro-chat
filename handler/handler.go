@@ -25,7 +25,7 @@ func (c *Chat) createMessage(msg *pb.Message) error {
 		// the message has already been processed
 		return nil
 	} else if err != store.ErrNotFound {
-		// an unexpected error occured
+		// an unexpected error occurred
 		return err
 	}
 

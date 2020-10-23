@@ -11,10 +11,7 @@ import (
 	"github.com/micro/micro/v3/service/store"
 )
 
-// Connect to a chat using a bidirectional stream enabling the client to send and recieve messages
-// over a single RPC. When a message is sent on the stream, it will be added to the chat history
-// and sent to the other connected users. When opening the connection, the client should provide
-// the chat_id and user_id in the context so the server knows which messages to stream.
+// Connect to server end chat room
 func (c *Chat) Connect(ctx context.Context, stream pb.Chat_ConnectStream) error {
 	// the client passed the chat id and user id in the request context. we'll load that information
 	// now and validate it. If any information is missing we'll return a BadRequest error to the client
@@ -44,12 +41,12 @@ func (c *Chat) Connect(ctx context.Context, stream pb.Chat_ConnectStream) error 
 	cancelCtx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	// create a channel to send errors on, because the subscriber / publisher will run in seperate go-
+	// create a channel to send errors on, because the subscriber / publisher will run in separate go-
 	// routines, they need a way of returning errors to the client
 	errChan := make(chan error)
 
 	// create an event stream to consume messages posted by other users into the chat. we'll use the
-	// user id as a queue to ensure each user recieves the message
+	// user id as a queue to ensure each user receives the message
 	evStream, err := events.Consume(chatEventKeyPrefix+chatID, events.WithGroup(userID))
 	if err != nil {
 		logger.Errorf("Error streaming events. Chat ID: %v. Error: %v", chatID, err)
