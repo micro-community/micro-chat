@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package chat;
+option go_package = ".;chat";
+
+service Chat {
+  //支持幂等调用的接口,对相同的人用户创建会话，默认总是返回同一个chat，除非指定强制创建为新会话的参数
+  rpc New(NewRequest) returns (NewResponse);
+  //删除一个聊天，除非指定彻底销毁
+  rpc Remove(RemoveRequest) returns (RemoveResponse);
+  // 查询某个chat中的历史消息
+  rpc History(HistoryRequest) returns (HistoryResponse);
+  // Send a single message to the chat，当发送消息给服务端时，消息会被添加到历史消息，同时转发给其他的连接用户。
+  // 客户端的消息参数中应当携带chat_id和user_id 以便服务端识别会话和用户
+  rpc Send(SendRequest) returns (SendResponse);
+  // 双向stream的方式，连接到某一个会话(或者聊天室)，
+  rpc Connect(stream Message) returns (stream Message);
+}
+
+// NewRequest contains the infromation needed to create a new chat
+message NewRequest {
+  repeated string user_ids = 1;
+  bool forceNew = 2;
+
+}
+// NewResponse contains the chat id for the users
+message NewResponse {
+  string chat_id = 1;
+}
+
+message RemoveResponse {
+  string chat_id = 1;
+}
+
+message RemoveRequest {
+  string chat_id = 1;
+  bool  is_destroy =2; //是否强制销毁聊天
+}
+
+// HistoryRequest contains the id of the chat we want the history for. This RPC will return all 
+// historical messages, however in a real life application we'd introduce some form of pagination
+// here, only loading the older messages when required.
+message HistoryRequest {
+  string chat_id = 1;
+}
+
+// HistoryResponse contains the historical messages in a chat
+message HistoryResponse {
+  repeated Message messages = 1;
+}
+
+// SendRequest contains a single message to send to a chat
+message SendRequest {
+  // a client side id, should be validated by the server to make the request retry safe
+  string client_id = 1;
+  // id of the chat the message is being sent to / from
+  string chat_id = 2;
+  // id of the user who sent the message
+  string user_id = 3;
+  // subject of the message
+  string subject = 4;
+  // text of the message
+  string text = 5;
+}
+
+// SendResponse is a blank message returned when a message is successfully created
+message SendResponse {}
+
+// Message sent to a chat
+message Message {
+  // id of the message, allocated by the server
+  string id = 1;
+  // a client side id, should be validated by the server to make the request retry safe
+  string client_id = 2;
+  // id of the chat the message is being sent to / from
+  string chat_id = 3;
+  // id of the user who sent the message
+  string user_id = 4;
+  // time time the message was sent in unix format 
+  int64 sent_at = 5;
+  // subject of the message
+  string subject = 6;
+  // text of the message
+  string text = 7;
+}
