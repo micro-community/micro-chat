@@ -9,12 +9,6 @@ set up boost configuration for micro runtime which means using different compone
   - broker http
   - store memory
 
-- k8s
-
-  - registry kubernetes
-  - config configmap
-  - router static :dns
-
 - dev
   - registry mdns
   - config environment
