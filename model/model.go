@@ -28,6 +28,7 @@ var (
 //OrderType for index
 type OrderType string
 
+//OrderType for different type
 const (
 	OrderTypeUnordered = OrderType("unordered")
 	OrderTypeAsc       = OrderType("ascending")
@@ -118,6 +119,7 @@ type Index struct {
 	Base32Encode bool
 }
 
+//Order for fields
 type Order struct {
 	FieldName string
 	// Ordered or unordered keys. Ordered keys are padded.
@@ -126,6 +128,7 @@ type Order struct {
 	Type OrderType
 }
 
+//ToQuery return Query
 func (i Index) ToQuery(value interface{}) Query {
 	return Query{
 		Index: i,
@@ -134,11 +137,12 @@ func (i Index) ToQuery(value interface{}) Query {
 	}
 }
 
+//Indexes for index
 func Indexes(indexes ...Index) []Index {
 	return indexes
 }
 
-// ByEquality constructs an equiality index on `fieldName`
+// ByEquality constructs an equality index on `fieldName`
 func ByEquality(fieldName string) Index {
 	return Index{
 		FieldName: fieldName,
@@ -152,6 +156,7 @@ func ByEquality(fieldName string) Index {
 	}
 }
 
+//Query ability
 type Query struct {
 	Index
 	Order  Order
@@ -180,6 +185,7 @@ func Equals(fieldName string, value interface{}) Query {
 	}
 }
 
+//Save a table
 func (d *table) Save(instance interface{}) error {
 	// @todo replace this hack with reflection
 	js, err := json.Marshal(instance)
@@ -270,6 +276,7 @@ func (d *table) Save(instance interface{}) error {
 	return nil
 }
 
+//Read a table
 func (d *table) Read(query Query, resultPointer interface{}) error {
 	for _, index := range append(d.indexes, d.options.IDIndex) {
 		if indexMatchesQuery(index, query) {
@@ -293,6 +300,7 @@ func (d *table) Read(query Query, resultPointer interface{}) error {
 	return fmt.Errorf("For query type '%v', field '%v' does not match any indexes", query.Type, query.FieldName)
 }
 
+//List a table
 func (d *table) List(query Query, resultSlicePointer interface{}) error {
 	for _, index := range append(d.indexes, d.options.IDIndex) {
 		if indexMatchesQuery(index, query) {
@@ -510,6 +518,7 @@ func (d *table) getOrderedStringFieldKey(i Index, id interface{}, fieldValue str
 	return fmt.Sprintf(fw("%v:%v:%v"), vw(d.namespace, indexPrefix(i), keyPart)...)
 }
 
+//Delete  by query
 func (d *table) Delete(query Query) error {
 	defInd := defaultIndex()
 	if !indexMatchesQuery(defInd, query) {

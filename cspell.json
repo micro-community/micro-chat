@@ -21,6 +21,7 @@
         "drsp",
         "Eamon",
         "etcd",
+        "gofrs",
         "gomodule",
         "gorm",
         "gosimple",
