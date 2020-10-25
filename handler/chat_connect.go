@@ -4,7 +4,7 @@ import (
 	"context"
 
 	pb "github.com/micro-community/micro-chat/proto"
-	"github.com/micro/go-micro/metadata"
+	"github.com/micro/micro/v3/service/context/metadata"
 	"github.com/micro/micro/v3/service/errors"
 	"github.com/micro/micro/v3/service/events"
 	"github.com/micro/micro/v3/service/logger"
