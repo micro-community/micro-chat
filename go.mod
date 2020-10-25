@@ -6,7 +6,6 @@ require (
 	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/golang/protobuf v1.4.3
 	github.com/google/uuid v1.1.2
-	github.com/micro/go-micro v1.18.0
 	github.com/micro/micro/v3 v3.0.0-beta.7
 	github.com/urfave/cli/v2 v2.2.0
 	google.golang.org/protobuf v1.25.0
