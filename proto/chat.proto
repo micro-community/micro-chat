@@ -70,7 +70,7 @@ message SendRequest {
 // SendResponse is a blank message returned when a message is successfully created
 message SendResponse {}
 
-// Message sent to a chat
+// Message:  聊天中的消息体
 message Message {
   // id of the message, allocated by the server
   string id = 1;

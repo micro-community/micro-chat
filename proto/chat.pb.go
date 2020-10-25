@@ -492,7 +492,7 @@ func (*SendResponse) Descriptor() ([]byte, []int) {
 	return file_chat_proto_rawDescGZIP(), []int{7}
 }
 
-// Message sent to a chat
+// Message:  聊天中的消息体
 type Message struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

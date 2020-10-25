@@ -185,7 +185,7 @@ func Equals(fieldName string, value interface{}) Query {
 	}
 }
 
-//Save a table
+//Save model to a table
 func (d *table) Save(instance interface{}) error {
 	// @todo replace this hack with reflection
 	js, err := json.Marshal(instance)

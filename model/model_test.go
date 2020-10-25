@@ -322,7 +322,7 @@ func TestUniqueIndex(t *testing.T) {
 		Tag: "hi-there",
 	})
 	if err == nil {
-		t.Fatal("Save shoud fail with duplicate tag error because the index is unique")
+		t.Fatal("Save should fail with duplicate tag error because the index is unique")
 	}
 }
 
@@ -367,7 +367,7 @@ func TestNonIDKeys(t *testing.T) {
 }
 
 // This might be an almost duplicate test, I used it to try reproduce an issue
-// Leaving this here for now as we dont have enough tests anyway.
+// Leaving this here for now as we don't have enough tests anyway.
 func TestListByString(t *testing.T) {
 	slugIndex := ByEquality("slug")
 	slugIndex.Order.Type = OrderTypeUnordered

@@ -11,7 +11,7 @@ import (
 	"github.com/micro/micro/v3/service/store"
 )
 
-// Connect to server end chat room
+// Connect to server enter chat room
 func (c *Chat) Connect(ctx context.Context, stream pb.Chat_ConnectStream) error {
 	// the client passed the chat id and user id in the request context. we'll load that information
 	// now and validate it. If any information is missing we'll return a BadRequest error to the client

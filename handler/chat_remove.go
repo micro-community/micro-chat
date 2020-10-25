@@ -18,7 +18,7 @@ func (c *Chat) Remove(ctx context.Context, req *pb.RemoveRequest, rsp *pb.Remove
 	}
 
 	// lookup the chat from the store to ensure it's valid
-	if _, err := store.Read(chatStoreKeyPrefix + req.ChatId); err == store.ErrNotFound {
+	if err := store.Delete(chatStoreKeyPrefix + req.ChatId); err == store.ErrNotFound {
 		return errors.BadRequest("chat.History.InvalidChatID", "Chat not found with this ID")
 	} else if err != nil {
 		logger.Errorf("Error reading from the store. Chat ID: %v. Error: %v", req.ChatId, err)
