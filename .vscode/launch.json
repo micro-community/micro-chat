@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug run go",
+      "name": "Debug run go server",
       "type": "go",
       "request": "launch",
       "mode": "auto",
@@ -19,7 +19,23 @@
       "args": [
         "-c=${workspaceFolder}/config.json",
         "--profile=dev",
-        "--service_address=127.0.0.0.1:8080",
+        "--service_address=:8080",
+      ]
+    },
+    {
+      "name": "Debug run go cli",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}/client/main.go",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        //       "MICRO_STARTER_CONFIG_PATH": "./",
+        "MICRO_DEBUG_MODE": "true",
+      },
+      "args": [
+        "-c=${workspaceFolder}/config.json",
+        "--profile=dev",
       ]
     }
   ]

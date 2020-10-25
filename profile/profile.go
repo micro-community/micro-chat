@@ -4,21 +4,21 @@ import (
 	"github.com/micro/micro/v3/service/auth"
 	"github.com/micro/micro/v3/service/auth/noop"
 	"github.com/micro/micro/v3/service/broker/http"
-
 	"github.com/micro/micro/v3/service/config"
 	"github.com/micro/micro/v3/service/config/env"
-
 	"github.com/micro/micro/v3/service/events"
 	"github.com/micro/micro/v3/service/events/stream/memory"
 	"github.com/micro/micro/v3/service/logger"
-	mregistry "github.com/micro/micro/v3/service/registry/memory"
+
 	"github.com/micro/micro/v3/service/runtime"
 	"github.com/micro/micro/v3/service/runtime/local"
 
+	"github.com/micro/micro/v3/profile"
+
+	//mregistry "github.com/micro/micro/v3/service/registry/memory"
+	mregistry "github.com/micro/micro/v3/service/registry/mdns"
 	"github.com/micro/micro/v3/service/store"
 	mstore "github.com/micro/micro/v3/service/store/memory"
-
-	"github.com/micro/micro/v3/profile"
 	"github.com/urfave/cli/v2"
 )
 
@@ -35,9 +35,8 @@ var Dev = &profile.Profile{
 		//store.DefaultStore = fstore.NewStore()
 		store.DefaultStore = mstore.NewStore()
 		config.DefaultConfig, _ = env.NewConfig()
-		//	config.DefaultConfig, _ = mConfStore.NewConfig(store.DefaultStore, "")
-		profile.SetupBroker(http.NewBroker())
-		profile.SetupRegistry(mregistry.NewRegistry())
+		//config.DefaultConfig, _ = storeConfig.NewConfig(store.DefaultStore, "")
+
 		//	profile.SetupJWTRules()
 		var err error
 		events.DefaultStream, err = memory.NewStream()
@@ -45,6 +44,8 @@ var Dev = &profile.Profile{
 			logger.Fatalf("Error configuring stream for dev: %v", err)
 		}
 
+		profile.SetupBroker(http.NewBroker())
+		profile.SetupRegistry(mregistry.NewRegistry())
 		// store.DefaultBlobStore, err = fstore.NewBlobStore()
 		// if err != nil {
 		// 	logger.Fatalf("Error configuring file blob store: %v", err)

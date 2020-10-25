@@ -18,7 +18,7 @@ const (
 type Chat struct {
 }
 
-// createMessage is a helper function which creates a message in the event stream. It handles the
+// createMessage creates a message in the event stream. It handles the
 // logic for ensuring client id is unique.
 func (c *Chat) createMessage(msg *pb.Message) error {
 	// a message was received from the client. validate it hasn't been received before

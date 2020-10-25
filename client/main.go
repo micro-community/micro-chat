@@ -14,6 +14,8 @@ import (
 	"github.com/micro/micro/v3/service"
 	"github.com/micro/micro/v3/service/context/metadata"
 	"github.com/micro/micro/v3/service/logger"
+
+	_ "github.com/micro-community/micro-chat/profile"
 )
 
 var (
@@ -24,11 +26,11 @@ var (
 func main() {
 	// create a chat service client
 	srv := service.New()
-	cli := chat.NewChatService("chat", srv.Client())
+	chatCli := chat.NewChatService("micro-chat", srv.Client())
 
 	// create a chat for our users
 	userIDs := []string{userOneID, userTwoID}
-	nRsp, err := cli.New(context.TODO(), &chat.NewRequest{UserIds: userIDs})
+	nRsp, err := chatCli.New(context.TODO(), &chat.NewRequest{UserIds: userIDs})
 	if err != nil {
 		logger.Fatalf("Error creating the chat: %v", err)
 	}
@@ -36,7 +38,7 @@ func main() {
 	logger.Infof("Chat Created. ID: %v", chatID)
 
 	// list the number messages in the chat history
-	hRsp, err := cli.History(context.TODO(), &chat.HistoryRequest{ChatId: chatID})
+	hRsp, err := chatCli.History(context.TODO(), &chat.HistoryRequest{ChatId: chatID})
 	if err != nil {
 		logger.Fatalf("Error getting the chat history: %v", err)
 	}
@@ -50,7 +52,7 @@ func main() {
 		ctx := metadata.NewContext(context.TODO(), metadata.Metadata{
 			"user-id": userOneID, "chat-id": chatID,
 		})
-		stream, err := cli.Connect(ctx)
+		stream, err := chatCli.Connect(ctx)
 		if err != nil {
 			errChan <- err
 			return
@@ -86,7 +88,7 @@ func main() {
 		ctx := metadata.NewContext(context.TODO(), metadata.Metadata{
 			"user-id": userTwoID, "chat-id": chatID,
 		})
-		stream, err := cli.Connect(ctx)
+		stream, err := chatCli.Connect(ctx)
 		if err != nil {
 			errChan <- err
 			return
@@ -116,6 +118,9 @@ func main() {
 			time.Sleep(time.Second)
 		}
 	}()
+
+	//remove chat
+	chatCli.Remove(context.TODO(), &chat.RemoveRequest{ChatId: chatID})
 
 	logger.Fatal(<-errChan)
 }

@@ -13,7 +13,7 @@ import (
 func main() {
 	// Create the service
 	srv := service.New(
-		service.Name("chat"),
+		service.Name("micro-chat"),
 		service.Version("latest"),
 	)
 
