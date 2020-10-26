@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/micro-community/micro-chat/model"
 	message "github.com/micro-community/micro-chat/proto"
+	"github.com/micro/dev/model"
 	"github.com/micro/micro/v3/service/store"
 )
 
@@ -16,13 +16,13 @@ type Repository struct {
 
 //New return a message repo
 func New() *Repository {
-	nameIndex := model.ByEquality("name")
-	nameIndex.Unique = true
-	emailIndex := model.ByEquality("email")
-	emailIndex.Unique = true
+	clientIndex := model.ByEquality("ClientId")
+	clientIndex.Unique = true
+	//	userIndex := model.ByEquality("UserId")
+	//	userIndex.Unique = true
 
 	return &Repository{
-		messsages: model.NewTable(store.DefaultStore, "messsages", model.Indexes(nameIndex, emailIndex), nil),
+		messsages: model.NewTable(store.DefaultStore, "messsages", model.Indexes(clientIndex), nil),
 	}
 }
 
