@@ -38,6 +38,7 @@
         "Iprotos",
         "kubernetes",
         "ldflags",
+        "mbroker",
         "mdns",
         "mongodb",
         "mregistry",

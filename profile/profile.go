@@ -3,7 +3,9 @@ package profile
 import (
 	"github.com/micro/micro/v3/service/auth"
 	"github.com/micro/micro/v3/service/auth/noop"
-	"github.com/micro/micro/v3/service/broker/http"
+
+	//"github.com/micro/micro/v3/service/broker/http"
+	mbroker "github.com/micro/micro/v3/service/broker/memory"
 	"github.com/micro/micro/v3/service/config"
 	"github.com/micro/micro/v3/service/config/env"
 	"github.com/micro/micro/v3/service/events"
@@ -15,8 +17,8 @@ import (
 
 	"github.com/micro/micro/v3/profile"
 
-	//mregistry "github.com/micro/micro/v3/service/registry/memory"
-	mregistry "github.com/micro/micro/v3/service/registry/mdns"
+	mregistry "github.com/micro/micro/v3/service/registry/memory"
+	//mregistry "github.com/micro/micro/v3/service/registry/mdns"
 	"github.com/micro/micro/v3/service/store"
 	mstore "github.com/micro/micro/v3/service/store/memory"
 	"github.com/urfave/cli/v2"
@@ -44,7 +46,7 @@ var Dev = &profile.Profile{
 			logger.Fatalf("Error configuring stream for dev: %v", err)
 		}
 
-		profile.SetupBroker(http.NewBroker())
+		profile.SetupBroker(mbroker.NewBroker())
 		profile.SetupRegistry(mregistry.NewRegistry())
 		// store.DefaultBlobStore, err = fstore.NewBlobStore()
 		// if err != nil {
