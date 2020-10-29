@@ -10,12 +10,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	_ "github.com/micro-community/micro-chat/profile"
 	chat "github.com/micro-community/micro-chat/proto"
 	"github.com/micro/micro/v3/service"
+	"github.com/micro/micro/v3/service/client"
 	"github.com/micro/micro/v3/service/context/metadata"
 	"github.com/micro/micro/v3/service/logger"
-
-	_ "github.com/micro-community/micro-chat/profile"
 )
 
 var (
@@ -26,6 +26,10 @@ var (
 func main() {
 	// create a chat service client
 	srv := service.New()
+
+	//disable local service discovery
+	srv.Client().Init(client.Proxy("localhost:8080"))
+
 	chatCli := chat.NewChatService("micro-chat", srv.Client())
 
 	// create a chat for our users
@@ -83,7 +87,7 @@ func main() {
 		}
 	}()
 
-	// run user two
+	//	run user two
 	go func() {
 		ctx := metadata.NewContext(context.TODO(), metadata.Metadata{
 			"user-id": userTwoID, "chat-id": chatID,

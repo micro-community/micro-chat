@@ -19,7 +19,7 @@
       "args": [
         "-c=${workspaceFolder}/config.json",
         "--profile=dev",
-        "--service_address=:8080",
+        "--service_address=localhsot:8080",
       ]
     },
     {

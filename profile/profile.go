@@ -17,8 +17,8 @@ import (
 
 	"github.com/micro/micro/v3/profile"
 
-	mregistry "github.com/micro/micro/v3/service/registry/memory"
-	//mregistry "github.com/micro/micro/v3/service/registry/mdns"
+	//mregistry "github.com/micro/micro/v3/service/registry/memory"
+	mregistry "github.com/micro/micro/v3/service/registry/mdns"
 	"github.com/micro/micro/v3/service/store"
 	mstore "github.com/micro/micro/v3/service/store/memory"
 	"github.com/urfave/cli/v2"
