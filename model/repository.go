@@ -1,3 +1,10 @@
+/*
+ * @Author: Crazybber
+ * @Date: 2020-10-30 00:18:11
+ * @Last Modified by: none
+ * @Last Modified time: 2020-10-30 00:19:28
+ * @Description: current model have not been used
+ */
 package model
 
 import (
