@@ -1,4 +1,4 @@
-package repository
+package model
 
 import (
 	"errors"
@@ -11,18 +11,21 @@ import (
 
 //Repository for message
 type Repository struct {
+	Name      string
 	messsages model.Table
 }
 
-//New return a message repo
-func New() *Repository {
+//NewRepository return a message repo
+func NewRepository(repoName string) *Repository {
+
 	clientIndex := model.ByEquality("ClientId")
 	clientIndex.Unique = true
 	//	userIndex := model.ByEquality("UserId")
 	//	userIndex.Unique = true
 
 	return &Repository{
-		messsages: model.NewTable(store.DefaultStore, "messsages", model.Indexes(clientIndex), nil),
+		Name:      repoName,
+		messsages: model.NewTable(store.DefaultStore, repoName, model.Indexes(clientIndex), nil),
 	}
 }
 

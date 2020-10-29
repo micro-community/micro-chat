@@ -3,6 +3,7 @@ package handler
 // it's standard to import the services own proto under the alias pb
 
 import (
+	"github.com/micro-community/micro-chat/model"
 	pb "github.com/micro-community/micro-chat/proto"
 	"github.com/micro/micro/v3/service/events"
 	"github.com/micro/micro/v3/service/store"
@@ -16,11 +17,16 @@ const (
 
 // Chat satisfies the ChatHandler interface. You can see this interface defined in chat.pb.micro.go
 type Chat struct {
+	Namespace string
+	repo      *model.Repository
 }
 
 //New Return Chat Handler
-func New() *Chat {
-	return &Chat{}
+func New(namespace string) *Chat {
+	return &Chat{
+		Namespace: namespace,
+		repo:      model.NewRepository("messsages"),
+	}
 }
 
 // createMessage creates a message in the event stream. It handles the

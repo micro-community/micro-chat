@@ -27,7 +27,7 @@ func main() {
 		return nil
 	}))
 
-	srv.Handle(handler.New())
+	srv.Handle(handler.New("chat-handler"))
 
 	// Run the service
 	if err := srv.Run(); err != nil {
