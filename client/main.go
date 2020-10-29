@@ -13,7 +13,6 @@ import (
 	_ "github.com/micro-community/micro-chat/profile"
 	chat "github.com/micro-community/micro-chat/proto"
 	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/client"
 	"github.com/micro/micro/v3/service/context/metadata"
 	"github.com/micro/micro/v3/service/logger"
 )
@@ -26,9 +25,6 @@ var (
 func main() {
 	// create a chat service client
 	srv := service.New()
-
-	//disable local service discovery
-	srv.Client().Init(client.Proxy("localhost:8080"))
 
 	chatCli := chat.NewChatService("micro-chat", srv.Client())
 
