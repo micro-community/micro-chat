@@ -18,6 +18,11 @@ const (
 type Chat struct {
 }
 
+//New Return Chat Handler
+func New() *Chat {
+	return &Chat{}
+}
+
 // createMessage creates a message in the event stream. It handles the
 // logic for ensuring client id is unique.
 func (c *Chat) createMessage(msg *pb.Message) error {

@@ -2,9 +2,8 @@ package main
 
 import (
 	"github.com/micro/micro/v3/service"
-	"github.com/micro/micro/v3/service/logger"
-
 	"github.com/micro/micro/v3/service/config"
+	"github.com/micro/micro/v3/service/logger"
 
 	"github.com/micro-community/micro-chat/handler"
 	_ "github.com/micro-community/micro-chat/profile"
@@ -28,7 +27,7 @@ func main() {
 		return nil
 	}))
 
-	srv.Handle(new(handler.Chat))
+	srv.Handle(handler.New())
 
 	// Run the service
 	if err := srv.Run(); err != nil {
